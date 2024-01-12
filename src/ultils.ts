@@ -1,2 +1,2 @@
-const B: number = 2;
-export { B };
+const B: number = 2
+export { B }
