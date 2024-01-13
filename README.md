@@ -21,7 +21,7 @@ Use with vue 3:
 	**Register global:**
 	
     import  { createApp }  from  'vue'
-    import VueDragScroller from  "../src/index"
+    import VueDragScroller from  "vue-drag-scroller"
          
     import App from  './App.vue'
     
