@@ -72,6 +72,7 @@ const options = {
     </div>
 </template>
 ```
+
 ### Drag parent except all child
 #### Example
 ```javascript
