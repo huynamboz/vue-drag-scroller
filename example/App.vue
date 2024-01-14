@@ -12,23 +12,46 @@ const options = {
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-    <div v-drag-scroller="{
-      startScroll: onScroll,
-    }" class="wrapper">
-      <div class="content">
-        <div data-drag-scroller-disable class="box"></div>
-        <div drag-scroller-disable class="box"></div>
-        <div drag-scroller-disable class="box"></div>
-        <div drag-scroller-disable class="box"></div>
+  <body>
+    <div class="container">
+      <a href="https://github.com/huynamboz/vue-drag-scroller/blob/dev/example/App.vue"><code>https://github.com/huynamboz/vue-drag-scroller/blob/dev/example/App.vue</code></a>
+      <div class="container--normal">
+        <p>Normal option: <code>v-drag-scroller</code></p>
+        <div v-drag-scroller="options" class="wrapper">
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+        </div>
+      </div>
+      <!-- disable all child -->
+      <div class="container--normal">
+        <p>Normal option: <code>v-drag-scroller.disablechild</code></p>
+        <div v-drag-scroller.disablechild="options" class="wrapper">
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
+  </body>
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 .wrapper {
+  border-radius: 10px;
+  overflow: hidden;
   width: 300px;
   background-color: rgb(184, 184, 184);
   overflow: auto;
@@ -36,8 +59,9 @@ const options = {
   white-space: nowrap;
 }
 .content {
-  height: 100%;
+  height: 70%;
   width: 600px;
+  background-color: brown;
   display: flex;
   align-items: center;
 }
