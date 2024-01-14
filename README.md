@@ -72,7 +72,11 @@ const options = {
     </div>
 </template>
 ```
+<<<<<<< HEAD
+### Drag parent except all child
+=======
 <!-- ### Drag parent except all child
+>>>>>>> ff0185f2ff43b4a0dbf974619d49c4fbe20e8ca1
 #### Example
 ```javascript
 <template>
@@ -83,7 +87,11 @@ const options = {
         </div>
     </div>
 </template>
+<<<<<<< HEAD
+```
+=======
 ``` -->
+>>>>>>> ff0185f2ff43b4a0dbf974619d49c4fbe20e8ca1
 ### Drag parent except particular child
 #### Example
 ```javascript
@@ -95,4 +103,8 @@ const options = {
         </div>
     </div>
 </template>
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> ff0185f2ff43b4a0dbf974619d49c4fbe20e8ca1
