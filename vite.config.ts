@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => {
  } else if (mode === 'app') {
   return {
     ...baseConfig,
+    base: '/vue-drag-scroller/',
     plugins: [
       vue(),
     ],
