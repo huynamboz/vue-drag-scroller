@@ -6,16 +6,16 @@ interface ICustomBinding extends DirectiveBinding {
   value: {
     startScroll?: (e: MouseEvent) => void
     endScroll?: (e: MouseEvent) => void
-  },
+  }
   modifiers: {
-    disablechild?: boolean;
-    onlyX?: boolean;
-    onlyY?: boolean;
+    disablechild?: boolean
+    onlyX?: boolean
+    onlyY?: boolean
   }
 }
 
 // const checkElementCondition = (el: HTMLElement, condition: typeof CHILD_DISABLE | CHILD_ENABLE): boolean => {
- 
+
 // }
 const statefullDirective = (() => {
   const state = new WeakMap()
@@ -25,11 +25,11 @@ const statefullDirective = (() => {
       const { onlyX, onlyY, disablechild } = binding.modifiers
 
       const checkTag = (el: HTMLElement): boolean => {
-
         if (disablechild) {
           return el === elem
         }
 
+        // check if element is child of elem and disabled
         while (el && el.parentNode) {
           if (el && el?.hasAttribute(CHILD_DISABLE)) {
             return false
@@ -66,7 +66,6 @@ const statefullDirective = (() => {
         if (ev.preventDefault) ev.preventDefault()
         ev.cancelBubble = true
         ev.returnValue = false
-        // return isDrag && (elem.scrollLeft -= ev.movementX) && (elem.scrollTop -= ev.movementY)
         if (onlyX) {
           elem.scrollLeft -= ev.movementX
         } else if (onlyY) {

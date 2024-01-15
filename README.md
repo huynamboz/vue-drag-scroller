@@ -96,7 +96,7 @@ const options = {
 </template>
 ```
 
-### Drag parent except all child
+- ### Drag parent except all child
 #### Example
 ```javascript
 <template>
@@ -108,7 +108,7 @@ const options = {
     </div>
 </template>
 ```
-### Drag parent except particular child
+- ### Drag parent except particular child
 #### Example
 ```javascript
 <template>
@@ -117,6 +117,22 @@ const options = {
         </div>
         <div class="child">
         </div>
+    </div>
+</template>
+```
+- ### Only scroll in X axis
+#### Example
+```javascript
+<template>
+    <div v-drag-scroller.onlyX>
+    </div>
+</template>
+```
+- ### Only scroll in Y axis
+#### Example
+```javascript
+<template>
+    <div v-drag-scroller.onlyY>
     </div>
 </template>
 ```
