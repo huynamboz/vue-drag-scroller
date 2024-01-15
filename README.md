@@ -6,6 +6,8 @@
 [![npm license](https://img.shields.io/npm/l/vue-drag-scroller.svg)](https://www.npmjs.com/package/vue-drag-scroller)
 <!-- endtag -->
 This package help you drag to scroll easier🌟 <br>
+<!-- add demo https://hinam.site/vue-drag-scroller/ -->
+[Demo](https://huynamboz.github.io/vue-drag-scroller/) <br>
 ![2024-01-1322-16-59online-video-cutter com-ezgif com-crop](https://github.com/huynamboz/vue-drag-scroller/assets/38585889/d4143c76-9240-4163-a444-00bae811a138)
 
 ## How to install🔖
