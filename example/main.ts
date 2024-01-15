@@ -1,6 +1,6 @@
 import './assets/main.css'
 import { createApp } from 'vue'
-import VueDragScroller from "../src/index.ts"
+import VueDragScroller from "vue-drag-scroller"
 import App from './App.vue'
 
 const app = createApp(App)
