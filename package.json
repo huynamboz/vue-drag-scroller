@@ -16,10 +16,12 @@
     "./dist/*": "./dist/*"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode app",
+    "deploy": "gh-pages -d server",
     "build-only": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --mode app",
+    "build-lib": "vue-tsc --noEmit && vite build --mode lib",
+    "build-app": "vue-tsc --noEmit && vite build --mode app",
     "type-check": "vue-tsc --noEmit --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
