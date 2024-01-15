@@ -1,25 +1,33 @@
 import { App, DirectiveBinding } from 'vue'
 const CHILD_DISABLE = 'drag-scroller-disable'
+const CHILD_ENABLE = 'drag-scroller-enable'
+
 interface ICustomBinding extends DirectiveBinding {
   value: {
     startScroll?: (e: MouseEvent) => void
     endScroll?: (e: MouseEvent) => void
+  },
+  modifiers: {
+    disablechild?: boolean;
+    onlyX?: boolean;
+    onlyY?: boolean;
   }
 }
 
+// const checkElementCondition = (el: HTMLElement, condition: typeof CHILD_DISABLE | CHILD_ENABLE): boolean => {
+ 
+// }
 const statefullDirective = (() => {
   const state = new WeakMap()
   return {
     mounted(elem: HTMLElement, binding: ICustomBinding) {
       let isDrag = false
+      const { onlyX, onlyY, disablechild } = binding.modifiers
 
       const checkTag = (el: HTMLElement): boolean => {
-        if (binding.modifiers.disablechild) {
-          return el === elem
-        }
 
-        if (el && el?.hasAttribute(CHILD_DISABLE)) {
-          return false
+        if (disablechild) {
+          return el === elem
         }
 
         while (el && el.parentNode) {
@@ -34,7 +42,6 @@ const statefullDirective = (() => {
       }
 
       const dragStart = (e: MouseEvent): void => {
-        console.log('dragStart', e, isDrag)
         isDrag = checkTag(e.target as HTMLElement)
         if (
           isDrag &&
@@ -47,11 +54,11 @@ const statefullDirective = (() => {
 
       const dragEnd = (e: MouseEvent): void => {
         if (isDrag && binding.value?.endScroll && typeof binding.value.endScroll === 'function') {
-          console.log('dragEnd')
           binding.value.endScroll(e)
         }
         isDrag = false
       }
+
       const drag = (ev: MouseEvent): any => {
         if (!isDrag) return false
         // prevent text selection when mouse move
@@ -60,7 +67,11 @@ const statefullDirective = (() => {
         ev.cancelBubble = true
         ev.returnValue = false
         // return isDrag && (elem.scrollLeft -= ev.movementX) && (elem.scrollTop -= ev.movementY)
-        if (isDrag) {
+        if (onlyX) {
+          elem.scrollLeft -= ev.movementX
+        } else if (onlyY) {
+          elem.scrollTop -= ev.movementY
+        } else {
           elem.scrollLeft -= ev.movementX
           elem.scrollTop -= ev.movementY
         }
