@@ -38,12 +38,35 @@ app.mount('#app')
 ```
 
 ## Config🔖
-### Options
+### Options:
+you can pass options to directive like this:
+```javascript
+<template>
+    <div v-drag-scroller="options">
+    </div>
+</template>
+```
 | Name | Description | Type | Default |
 |--|--|--|--|
 | startScroll | Trigger when start scroll | Function | null |
 | endScroll | Trigger when end scroll | Function | null |
-### Events
+### Binding value:
+you can pass binding value to directive like this:
+```javascript
+<template>
+    <div v-drag-scroller.onlyX>
+    </div>
+</template>
+```
+| Name | Description | Type | Default |
+|--|--|--|--|
+| disablechild | Disable drag scroll in all child | Boolean | false |
+| drag-scroller-disable | Disable drag scroll in particular child | Boolean | false |
+| onlyX | Only scroll in X axis | Boolean | false |
+| onlyY | Only scroll in Y axis | Boolean | false |
+
+Priority: disablechild > drag-scroller-disable > onlyX > onlyY
+### Events:
 | Name | Description |
 |--|--|
 | startScroll | Trigger when start scroll |

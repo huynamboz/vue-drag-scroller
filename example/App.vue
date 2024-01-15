@@ -13,8 +13,8 @@ const options = {
 
 <template>
   <body>
+    <a href="https://github.com/huynamboz/vue-drag-scroller/blob/dev/example/App.vue"><code>https://github.com/huynamboz/vue-drag-scroller/blob/dev/example/App.vue</code></a>
     <div class="container">
-      <a href="https://github.com/huynamboz/vue-drag-scroller/blob/dev/example/App.vue"><code>https://github.com/huynamboz/vue-drag-scroller/blob/dev/example/App.vue</code></a>
       <div class="container--normal">
         <p>Normal option: <code>v-drag-scroller</code></p>
         <div v-drag-scroller="options" class="wrapper">
@@ -38,16 +38,70 @@ const options = {
           </div>
         </div>
       </div>
+      <!-- only scroll horizontal -->
+      <div class="container--normal">
+        <p>Only scroll horizontal: <code>v-drag-scroller.onlyX</code></p>
+        <div v-drag-scroller.onlyX="options" class="wrapper only">
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+        </div>
+      </div>
+       <!-- only scroll vertical -->
+       <div class="container--normal">
+        <p>Only scroll vertical: <code>v-drag-scroller.onlyX</code></p>
+        <div v-drag-scroller.onlyY="options" class="wrapper only">
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </template>
 
 <style scoped>
+body {
+  width: 100%;
+}
 .container {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 60px;
   flex-wrap: wrap;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 .wrapper {
   border-radius: 10px;
@@ -57,6 +111,17 @@ const options = {
   overflow: auto;
   height: 300px;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+.wrapper.only {
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+}
+.wrapper.only .content {
+  height: 100px;
+  min-height: 100px;
 }
 .content {
   height: 70%;
@@ -71,5 +136,9 @@ const options = {
   height: 100px;
   background-color: rgb(226, 39, 39);
   margin: 10px;
+}
+.container--normal {
+  display: flex;
+  gap: 20px;
 }
 </style>
