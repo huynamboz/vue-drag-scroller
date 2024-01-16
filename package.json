@@ -1,6 +1,6 @@
 {
   "name": "vue-drag-scroller",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "type": "module",
   "license": "MIT",
   "description": "A vue directive that helps you scroll in a more natural way.",
@@ -20,7 +20,7 @@
     "deploy": "gh-pages -d server",
     "build-only": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview --mode app",
-    "build-lib": "vue-tsc --noEmit && vite build --mode lib",
+    "build-lib": "vue-tsc --noEmit && vite build --mode lib && npm run define",
     "build-app": "vue-tsc --noEmit && vite build --mode app",
     "type-check": "vue-tsc --noEmit --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",

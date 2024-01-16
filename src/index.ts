@@ -6,6 +6,7 @@ interface ICustomBinding extends DirectiveBinding {
   value: {
     startScroll?: (e: MouseEvent) => void
     endScroll?: (e: MouseEvent) => void
+    onScrolling?: (e: MouseEvent) => void
   }
   modifiers: {
     disablechild?: boolean
@@ -61,6 +62,10 @@ const statefullDirective = (() => {
 
       const drag = (ev: MouseEvent): any => {
         if (!isDrag) return false
+
+        if (binding.value.onScrolling && typeof binding.value.onScrolling === 'function') {
+          binding.value.onScrolling(ev)
+        }
         // prevent text selection when mouse move
         if (ev.stopPropagation) ev.stopPropagation()
         if (ev.preventDefault) ev.preventDefault()
