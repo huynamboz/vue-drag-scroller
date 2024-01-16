@@ -73,6 +73,7 @@ Priority: disablechild > drag-scroller-disable > onlyX > onlyY
 |--|--|
 | startScroll | Trigger when start scroll |
 | endScroll | Trigger when end scroll |
+| onScrolling | Trigger when drag and move mouse |
 #### Example
 ```javascript
 <script setup>

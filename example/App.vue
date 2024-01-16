@@ -5,9 +5,13 @@ const onScroll = (e: Event) => {
 const onEndScroll = (e: Event) => {
   console.log("end scroll" ,e);
 };
+const onScrolling = (e: Event) => {
+  console.log("scrolling" ,e);
+};
 const options = {
   startScroll: onScroll,
   endScroll: onEndScroll,
+  onScrolling: onScrolling,
 };
 </script>
 

@@ -3,6 +3,7 @@ interface ICustomBinding extends DirectiveBinding {
     value: {
         startScroll?: (e: MouseEvent) => void;
         endScroll?: (e: MouseEvent) => void;
+        onScrolling?: (e: MouseEvent) => void;
     };
     modifiers: {
         disablechild?: boolean;
