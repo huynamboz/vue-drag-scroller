@@ -19,7 +19,7 @@ interface ICustomBinding extends DirectiveBinding {
 const statefullDirective = (() => {
   const state = new WeakMap()
   return {
-    mounted(elem: HTMLElement, binding: ICustomBinding) {
+    mounted(elem: HTMLElement, binding: ICustomBinding ) {
       let isDrag = false
       const { onlyX, onlyY, disablechild } = binding.modifiers
 
@@ -52,7 +52,7 @@ const statefullDirective = (() => {
       }
 
       const dragEnd = (e: MouseEvent): void => {
-        if (isDrag && binding.value?.endScroll && typeof binding.value.endScroll === 'function') {
+        if (isDrag && binding.value &&  binding.value?.endScroll && typeof binding.value.endScroll === 'function') {
           binding.value.endScroll(e)
         }
         isDrag = false
@@ -61,7 +61,7 @@ const statefullDirective = (() => {
       const drag = (ev: MouseEvent): any => {
         if (!isDrag) return false
 
-        if (binding.value.onScrolling && typeof binding.value.onScrolling === 'function') {
+        if (binding.value && binding.value?.onScrolling && typeof binding.value.onScrolling === 'function') {
           binding.value.onScrolling(ev)
         }
         // prevent text selection when mouse move
