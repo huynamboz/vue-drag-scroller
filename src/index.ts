@@ -7,6 +7,7 @@ interface ICustomBinding extends DirectiveBinding {
     startScroll?: (e: MouseEvent) => void
     endScroll?: (e: MouseEvent) => void
     onScrolling?: (e: MouseEvent) => void
+    speed?: number
   }
   modifiers: {
     disablechild?: boolean
@@ -15,9 +16,6 @@ interface ICustomBinding extends DirectiveBinding {
   }
 }
 
-// const checkElementCondition = (el: HTMLElement, condition: typeof CHILD_DISABLE | CHILD_ENABLE): boolean => {
-
-// }
 const statefullDirective = (() => {
   const state = new WeakMap()
   return {
@@ -71,13 +69,14 @@ const statefullDirective = (() => {
         if (ev.preventDefault) ev.preventDefault()
         ev.cancelBubble = true
         ev.returnValue = false
+        const speed = binding.value?.speed || 1
         if (onlyX) {
-          elem.scrollLeft -= ev.movementX
+          elem.scrollLeft -= ev.movementX * speed
         } else if (onlyY) {
-          elem.scrollTop -= ev.movementY
+          elem.scrollTop -= ev.movementY * speed
         } else {
-          elem.scrollLeft -= ev.movementX
-          elem.scrollTop -= ev.movementY
+          elem.scrollLeft -= ev.movementX * speed
+          elem.scrollTop -= ev.movementY * speed
         }
       }
 

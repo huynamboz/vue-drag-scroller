@@ -1,6 +1,6 @@
 {
   "name": "vue-drag-scroller",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "type": "module",
   "license": "MIT",
   "description": "A vue directive that helps you scroll in a more natural way.",

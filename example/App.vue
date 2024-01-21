@@ -12,6 +12,7 @@ const options = {
   startScroll: onScroll,
   endScroll: onEndScroll,
   onScrolling: onScrolling,
+  speed: 1,
 };
 </script>
 

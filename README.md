@@ -52,6 +52,7 @@ you can pass options to directive like this:
 |--|--|--|--|
 | startScroll | Trigger when start scroll | Function | null |
 | endScroll | Trigger when end scroll | Function | null |
+| speed | Speed of scroll | Number | 1 |
 ### Binding value:
 you can pass binding value to directive like this:
 ```javascript
