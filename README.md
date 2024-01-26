@@ -140,3 +140,13 @@ const options = {
     </div>
 </template>
 ```
+- ### Hide scrollbar
+#### Example
+```javascript
+<template>
+    <div v-drag-scroller={
+      hideScrollbar: true
+    }>
+    </div>
+</template>
+```
