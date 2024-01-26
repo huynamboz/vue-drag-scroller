@@ -70,7 +70,7 @@ const options = {
        <!-- only scroll vertical -->
        <div class="container--normal">
         <p>Only scroll vertical: <code>v-drag-scroller.onlyX</code></p>
-        <div v-drag-scroller.onlyY="options" class="wrapper only">
+        <div v-drag-scroller.onlyY="{...options, hideScrollbar: true}" class="wrapper only">
           <div class="content">
             <div  class="box"></div>
             <div  class="box"></div>

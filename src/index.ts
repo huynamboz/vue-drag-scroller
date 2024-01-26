@@ -1,13 +1,14 @@
 import { App, DirectiveBinding } from 'vue'
 const CHILD_DISABLE = 'drag-scroller-disable'
 const CHILD_ENABLE = 'drag-scroller-enable'
-
+const HIDE_SCROLLBAR = 'hideScrollbar'
 interface ICustomBinding extends DirectiveBinding {
   value: {
     startScroll?: (e: MouseEvent) => void
     endScroll?: (e: MouseEvent) => void
     onScrolling?: (e: MouseEvent) => void
     speed?: number
+    hideScrollbar?: boolean
   }
   modifiers: {
     disablechild?: boolean
@@ -19,9 +20,15 @@ interface ICustomBinding extends DirectiveBinding {
 const statefullDirective = (() => {
   const state = new WeakMap()
   return {
-    mounted(elem: HTMLElement, binding: ICustomBinding ) {
+    mounted(elem: HTMLElement, binding: ICustomBinding) {
       let isDrag = false
       const { onlyX, onlyY, disablechild } = binding.modifiers
+
+      const OptionBinding = binding.value ?? {}
+
+      if (OptionBinding.hideScrollbar === true) {
+        elem.style.overflow = 'hidden'
+      }
 
       const checkTag = (el: HTMLElement): boolean => {
         if (disablechild) {
@@ -44,16 +51,16 @@ const statefullDirective = (() => {
         isDrag = checkTag(e.target as HTMLElement)
         if (
           isDrag &&
-          binding.value?.startScroll &&
-          typeof binding.value.startScroll === 'function'
+          OptionBinding?.startScroll &&
+          typeof OptionBinding?.startScroll === 'function'
         ) {
-          binding.value.startScroll(e)
+          OptionBinding.startScroll(e)
         }
       }
 
       const dragEnd = (e: MouseEvent): void => {
-        if (isDrag && binding.value &&  binding.value?.endScroll && typeof binding.value.endScroll === 'function') {
-          binding.value.endScroll(e)
+        if (isDrag && OptionBinding?.endScroll && typeof OptionBinding?.endScroll === 'function') {
+          OptionBinding.endScroll(e)
         }
         isDrag = false
       }
@@ -61,15 +68,15 @@ const statefullDirective = (() => {
       const drag = (ev: MouseEvent): any => {
         if (!isDrag) return false
 
-        if (binding.value && binding.value?.onScrolling && typeof binding.value.onScrolling === 'function') {
-          binding.value.onScrolling(ev)
+        if (OptionBinding?.onScrolling && typeof OptionBinding?.onScrolling === 'function') {
+          OptionBinding.onScrolling(ev)
         }
         // prevent text selection when mouse move
         if (ev.stopPropagation) ev.stopPropagation()
         if (ev.preventDefault) ev.preventDefault()
         ev.cancelBubble = true
         ev.returnValue = false
-        const speed = binding.value?.speed || 1
+        const speed = OptionBinding?.speed || 1
         if (onlyX) {
           elem.scrollLeft -= ev.movementX * speed
         } else if (onlyY) {

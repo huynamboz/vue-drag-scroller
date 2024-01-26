@@ -1,6 +1,6 @@
 {
   "name": "vue-drag-scroller",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "type": "module",
   "license": "MIT",
   "description": "A vue directive that helps you scroll in a more natural way.",
@@ -51,7 +51,7 @@
     "type": "git",
     "url": "git+https://github.com/huynamboz/vue-drag-scroller.git"
   },
-  "homepage": "https://huynamboz.github.io/vue-drag-scroller/",
+  "homepage": "https://hinam.site/docs/vue-drag-scroller",
   "keywords": [
     "vue3",
     "vue3-directive",
