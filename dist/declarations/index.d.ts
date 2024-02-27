@@ -6,6 +6,7 @@ interface ICustomBinding extends DirectiveBinding {
         onScrolling?: (e: MouseEvent) => void;
         speed?: number;
         hideScrollbar?: boolean;
+        reverseDirection?: boolean;
     };
     modifiers: {
         disablechild?: boolean;

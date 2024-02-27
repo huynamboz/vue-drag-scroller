@@ -150,3 +150,23 @@ const options = {
     </div>
 </template>
 ```
+- ### Change speed of scroll
+#### Example
+```javascript
+<template>
+    <div v-drag-scroller={
+      speed: 0.5 // default is 1
+    }>
+    </div>
+</template>
+```
+- ### Change direction of scroll
+#### Example
+```javascript
+<template>
+    <div v-drag-scroller={
+      reverseDirection: true
+    }>
+    </div>
+</template>
+```

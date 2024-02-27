@@ -13,6 +13,7 @@ const options = {
   endScroll: onEndScroll,
   onScrolling: onScrolling,
   speed: 1,
+  // reverseDirection: true,
 };
 </script>
 
