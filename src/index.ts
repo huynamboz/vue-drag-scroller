@@ -9,6 +9,7 @@ interface ICustomBinding extends DirectiveBinding {
     onScrolling?: (e: MouseEvent) => void
     speed?: number
     hideScrollbar?: boolean
+    reverseDirection?: boolean
   }
   modifiers: {
     disablechild?: boolean
@@ -26,6 +27,7 @@ const statefullDirective = (() => {
 
       const OptionBinding = binding.value ?? {}
 
+      // hide scrollbar
       if (OptionBinding.hideScrollbar === true) {
         elem.style.overflow = 'hidden'
       }
@@ -71,19 +73,23 @@ const statefullDirective = (() => {
         if (OptionBinding?.onScrolling && typeof OptionBinding?.onScrolling === 'function') {
           OptionBinding.onScrolling(ev)
         }
+
         // prevent text selection when mouse move
         if (ev.stopPropagation) ev.stopPropagation()
         if (ev.preventDefault) ev.preventDefault()
         ev.cancelBubble = true
         ev.returnValue = false
         const speed = OptionBinding?.speed || 1
+        const scrollLeftDelta = OptionBinding.reverseDirection ? ev.movementX * speed : -ev.movementX * speed;
+        const scrollTopDelta = OptionBinding.reverseDirection ? ev.movementY * speed : -ev.movementY * speed;
+
         if (onlyX) {
-          elem.scrollLeft -= ev.movementX * speed
+          elem.scrollLeft += scrollLeftDelta;
         } else if (onlyY) {
-          elem.scrollTop -= ev.movementY * speed
+          elem.scrollTop += scrollTopDelta;
         } else {
-          elem.scrollLeft -= ev.movementX * speed
-          elem.scrollTop -= ev.movementY * speed
+          elem.scrollLeft += scrollLeftDelta;
+          elem.scrollTop += scrollTopDelta;
         }
       }
 
