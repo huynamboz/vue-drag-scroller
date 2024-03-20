@@ -1,5 +1,8 @@
+# Vue drag scroller ⚡️
 
-# vue-drag-scroller
+![image](https://github.com/huynamboz/vue-drag-scroller/assets/38585889/57cc7cf2-1273-4416-8fcb-df8262a4af49)
+
+
 <!-- tag -->
 [![npm version](https://img.shields.io/npm/v/vue-drag-scroller.svg)](https://www.npmjs.com/package/vue-drag-scroller)
 [![npm download](https://img.shields.io/npm/dm/vue-drag-scroller.svg)](https://www.npmjs.com/package/vue-drag-scroller)
