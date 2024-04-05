@@ -182,3 +182,26 @@ const options = {
     </div>
 </template>
 ```
+- ### Events Listener with v-on or @
+#### Example with @
+```javascript
+<template>
+    <div v-drag-scroller
+      @scrollStart="onScroll"
+      @scrollEnd="onEndScroll"
+      @scrollMoving="onScrolling"
+    >
+    </div>
+</template>
+```
+#### Example with v-on
+```javascript
+<template>
+    <div v-drag-scroller
+      v-on:scrollStart="onScroll"
+      v-on:scrollEnd="onEndScroll"
+      v-on:scrollMoving="onScrolling"
+    >
+    </div>
+</template>
+```

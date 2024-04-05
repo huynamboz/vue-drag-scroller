@@ -15,6 +15,10 @@ const options = {
   speed: 1,
   reverseDirection: true,
 };
+
+const cus = () => {
+  console.log("cus");
+};
 </script>
 
 <template>
@@ -72,6 +76,34 @@ const options = {
        <div class="container--normal">
         <p>Only scroll vertical: <code>v-drag-scroller.onlyX</code></p>
         <div v-drag-scroller.onlyY="{...options, hideScrollbar: true}" class="wrapper only">
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+          <div class="content">
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+            <div  class="box"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container--normal">
+        <p>Only scroll vertical: <code>v-drag-scroller.onlyX</code></p>
+        <div v-drag-scroller.onlyY="{}" 
+          @scrollStart="(e) => console.log('Start custom', e)" 
+          v-on:scrollMoving="(e) => console.log('Moving custom', e)" 
+          @scrollEnd="(e) => console.log('End custom', e)" 
+          class="wrapper only">
           <div class="content">
             <div  class="box"></div>
             <div  class="box"></div>
