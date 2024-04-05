@@ -1,3 +1,4 @@
+import { env } from 'process'
 import { App, DirectiveBinding } from 'vue'
 const CHILD_DISABLE = 'drag-scroller-disable'
 const CHILD_ENABLE = 'drag-scroller-enable'
@@ -24,9 +25,15 @@ const statefullDirective = (() => {
     mounted(elem: HTMLElement, binding: ICustomBinding) {
       let isDrag = false
       const { onlyX, onlyY, disablechild } = binding.modifiers
-
+      
+      
       const OptionBinding = binding.value ?? {}
-
+      
+      // custom event
+      const eventStart = new Event('scrollStart', { bubbles: true })
+      const eventMoving = new Event('scrollMoving', { bubbles: true })
+      const eventEnd = new Event('scrollEnd', { bubbles: true })
+      
       // hide scrollbar
       if (OptionBinding.hideScrollbar === true) {
         elem.style.overflow = 'hidden'
@@ -51,7 +58,8 @@ const statefullDirective = (() => {
 
       const dragStart = (e: MouseEvent): void => {
         isDrag = checkTag(e.target as HTMLElement)
-        if (
+          elem.dispatchEvent(eventStart)
+          if (
           isDrag &&
           OptionBinding?.startScroll &&
           typeof OptionBinding?.startScroll === 'function'
@@ -61,7 +69,8 @@ const statefullDirective = (() => {
       }
 
       const dragEnd = (e: MouseEvent): void => {
-        if (isDrag && OptionBinding?.endScroll && typeof OptionBinding?.endScroll === 'function') {
+          elem.dispatchEvent(eventEnd)
+          if (isDrag && OptionBinding?.endScroll && typeof OptionBinding?.endScroll === 'function') {
           OptionBinding.endScroll(e)
         }
         isDrag = false
@@ -70,7 +79,8 @@ const statefullDirective = (() => {
       const drag = (ev: MouseEvent): any => {
         if (!isDrag) return false
 
-        if (OptionBinding?.onScrolling && typeof OptionBinding?.onScrolling === 'function') {
+          elem.dispatchEvent(eventMoving)
+          if (OptionBinding?.onScrolling && typeof OptionBinding?.onScrolling === 'function') {
           OptionBinding.onScrolling(ev)
         }
 
