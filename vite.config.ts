@@ -21,6 +21,9 @@ export default defineConfig(({ mode }) => {
         name: 'vue-drag-scroller',
         fileName: (format) => `vue-drag-scroller.${format}.js`
       },
+      rollupOptions: {
+        external: ['module.ts', './src/runtime/plugin.ts'],
+      },
     },
   }
  } else if (mode === 'app') {

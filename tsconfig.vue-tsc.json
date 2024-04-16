@@ -1,0 +1,7 @@
+{
+    "extends": "./tsconfig.json",
+    "exclude": ["module.ts", "./src/runtime/**"],
+    "vueCompilerOptions": {
+      "target": 2.7
+    }
+  }
