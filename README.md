@@ -30,7 +30,7 @@ https://github.com/huynamboz/vue-drag-scroller/assets/38585889/20139bab-0004-424
 
     yarn add vue-drag-scroller
 
-## Usage🔖
+## Install🔖
 
 Use with vue 3: <br>
 	**Register global:**
@@ -44,16 +44,58 @@ const app  =  createApp(App)
 app.use(VueDragScroller)
 app.mount('#app')
   
-// in component
+// in Example.vue
 <template>
 	<div v-drag-scroller>
 	</div>
 </template>
 ```
 
+**Register local:**
+```javascript
+// Example.vue
+<script>
+    import { dragScroller } from  "vue-drag-scroller"
+</script>
+<template>
+    <div v-drag-scroller>
+    </div>
+</template>
+```
+**Register in Nuxt:**
+```javascript
+// plugins/vue-drag-scroller.js
+import VueDragScroller from 'vue-drag-scroller'
+
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(VueDragScroller)
+})
+```
+```javascript
+// nuxt.config.js
+export default defineNuxtConfig({
+  plugins: ['~/plugins/vue-drag-scroller.ts'],
+})
+```
+
+
 ## Config🔖
 ### Options:
 you can pass options to directive like this:
+```javascript
+<script setup>
+import { ref } from 'vue'
+const options = ref({
+    startScroll: () => {
+        console.log("start scroll");
+    },
+    endScroll: () => {
+        console.log("end scroll");
+    },
+    speed: 1,
+});
+</script>
+```
 ```javascript
 <template>
     <div v-drag-scroller="options">
@@ -65,6 +107,8 @@ you can pass options to directive like this:
 | startScroll | Trigger when start scroll | Function | null |
 | endScroll | Trigger when end scroll | Function | null |
 | speed | Speed of scroll | Number | 1 |
+| hideScrollbar | Hide scrollbar | Boolean | false |
+| reverseDirection | Reverse direction of scroll | Boolean | false |
 ### Binding value:
 you can pass binding value to directive like this:
 ```javascript
@@ -81,12 +125,12 @@ you can pass binding value to directive like this:
 | onlyY | Only scroll in Y axis | Boolean | false |
 
 Priority: disablechild > drag-scroller-disable > onlyX > onlyY
-### Events:
+### Events (use in options):
 | Name | Description |
 |--|--|
-| startScroll | Trigger when start scroll |
-| endScroll | Trigger when end scroll |
-| onScrolling | Trigger when drag and move mouse |
+| startScroll | Trigger when start scroll|
+| endScroll | Trigger when end scroll|
+| onScrolling | Trigger when drag and move mouse|
 #### Example
 ```javascript
 <script setup>
@@ -111,7 +155,29 @@ const options = {
     </div>
 </template>
 ```
-
+- ### Events Listener with v-on or @
+#### Example with @
+```javascript
+<template>
+    <div v-drag-scroller
+      @scrollStart="onScroll"
+      @scrollEnd="onEndScroll"
+      @scrollMoving="onScrolling"
+    >
+    </div>
+</template>
+```
+#### Example with v-on
+```javascript
+<template>
+    <div v-drag-scroller
+      v-on:scrollStart="onScroll"
+      v-on:scrollEnd="onEndScroll"
+      v-on:scrollMoving="onScrolling"
+    >
+    </div>
+</template>
+```
 - ### Drag parent except all child
 #### Example
 ```javascript
@@ -179,29 +245,6 @@ const options = {
     <div v-drag-scroller={
       reverseDirection: true
     }>
-    </div>
-</template>
-```
-- ### Events Listener with v-on or @
-#### Example with @
-```javascript
-<template>
-    <div v-drag-scroller
-      @scrollStart="onScroll"
-      @scrollEnd="onEndScroll"
-      @scrollMoving="onScrolling"
-    >
-    </div>
-</template>
-```
-#### Example with v-on
-```javascript
-<template>
-    <div v-drag-scroller
-      v-on:scrollStart="onScroll"
-      v-on:scrollEnd="onEndScroll"
-      v-on:scrollMoving="onScrolling"
-    >
     </div>
 </template>
 ```
