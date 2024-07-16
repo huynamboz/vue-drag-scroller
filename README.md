@@ -35,6 +35,7 @@ https://github.com/huynamboz/vue-drag-scroller/assets/38585889/20139bab-0004-424
 Use with vue 3: <br>
 	**Register global:**
 ```javascript
+//main.ts
 import  { createApp }  from  'vue'
 import VueDragScroller from  "vue-drag-scroller"
        
@@ -43,20 +44,22 @@ import App from  './App.vue'
 const app  =  createApp(App)
 app.use(VueDragScroller)
 app.mount('#app')
-  
-// in Example.vue
+```
+
+``` html
+//Example.vue
 <template>
 	<div v-drag-scroller>
 	</div>
 </template>
 ```
-
 **Register local:**
 ```javascript
 // Example.vue
 <script>
-    import { dragScroller } from  "vue-drag-scroller"
+    import { dragScroller as vDragScroller } from  "vue-drag-scroller"
 </script>
+
 <template>
     <div v-drag-scroller>
     </div>
@@ -92,11 +95,12 @@ const options = ref({
     endScroll: () => {
         console.log("end scroll");
     },
-    speed: 1,
+    speed: 1, // default is 1
+    reverseDirection: false, // default is false
+    hideScrollbar: false, // default is false
 });
 </script>
-```
-```javascript
+
 <template>
     <div v-drag-scroller="options">
     </div>
@@ -117,10 +121,17 @@ you can pass binding value to directive like this:
     </div>
 </template>
 ```
+
+```javascript
+<template>
+    <div v-drag-scroller.disablechild>
+    </div>
+</template>
+```
+<!-- | drag-scroller-disable | Disable drag scroll in particular child | Boolean | false | -->
 | Name | Description | Type | Default |
 |--|--|--|--|
 | disablechild | Disable drag scroll in all child | Boolean | false |
-| drag-scroller-disable | Disable drag scroll in particular child | Boolean | false |
 | onlyX | Only scroll in X axis | Boolean | false |
 | onlyY | Only scroll in Y axis | Boolean | false |
 
