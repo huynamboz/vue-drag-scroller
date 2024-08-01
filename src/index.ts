@@ -1,4 +1,3 @@
-import { env } from 'process'
 import { App, DirectiveBinding } from 'vue'
 const CHILD_DISABLE = 'drag-scroller-disable'
 const CHILD_ENABLE = 'drag-scroller-enable'
@@ -87,6 +86,7 @@ const statefullDirective = (() => {
         // prevent text selection when mouse move
         if (ev.stopPropagation) ev.stopPropagation()
         if (ev.preventDefault) ev.preventDefault()
+        window.getSelection()?.removeAllRanges();
         ev.cancelBubble = true
         ev.returnValue = false
         const speed = OptionBinding?.speed || 1
@@ -124,4 +124,5 @@ const VueDragScroller = {
   }
 }
 export { statefullDirective as dragScroller }
+export { statefullDirective as vDragScroller }
 export default VueDragScroller
