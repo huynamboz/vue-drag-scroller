@@ -83,7 +83,6 @@ const statefullDirective = (() => {
           OptionBinding.onScrolling(ev)
         }
 
-        
         const speed = OptionBinding?.speed || 1
         const scrollLeftDelta = OptionBinding.reverseDirection ? ev.movementX * speed : -ev.movementX * speed;
         const scrollTopDelta = OptionBinding.reverseDirection ? ev.movementY * speed : -ev.movementY * speed;
@@ -96,11 +95,13 @@ const statefullDirective = (() => {
           elem.scrollLeft += scrollLeftDelta;
           elem.scrollTop += scrollTopDelta;
         }
+
+        preventSelection(ev)
         return false
       }
 
+      // prevent text selection when mouse move
       function preventSelection(ev: MouseEvent) {
-        // prevent text selection when mouse move
         if (ev.stopPropagation) ev.stopPropagation()
           if (ev.preventDefault) ev.preventDefault()
           window.getSelection()?.removeAllRanges();

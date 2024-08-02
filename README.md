@@ -10,7 +10,7 @@
 <!-- endtag -->
 This package help you drag to scroll easier🌟 <br>
 <!-- add demo https://hinam.site/vue-drag-scroller/ -->
-[Docs and demo](https://huynamboz.github.io/docs/vue-drag-scroller/) <br> <br>
+[Docs and demo](https://huynamboz.github.io/vue-drag-scroller/) <br> <br>
 
 
 
