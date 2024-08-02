@@ -1,0 +1,1 @@
+import{_ as s,c as i,o as a,a4 as t}from"./chunks/framework.BUetdhHN.js";const y=JSON.parse('{"title":"Configs","description":"","frontmatter":{},"headers":[],"relativePath":"configs.md","filePath":"configs.md"}'),n={name:"configs.md"},l=t("",16),h=[l];function p(e,k,E,d,r,g){return a(),i("div",null,h)}const c=s(n,[["render",p]]);export{y as __pageData,c as default};
