@@ -1,45 +1,46 @@
-const L = "drag-scroller-disable", h = /* @__PURE__ */ (() => {
+const g = "drag-scroller-disable", w = /* @__PURE__ */ (() => {
   const s = /* @__PURE__ */ new WeakMap();
   return {
-    mounted(r, a) {
+    mounted(r, l) {
       let o = !1;
-      const { onlyX: n, onlyY: E, disablechild: S } = a.modifiers, t = a.value ?? {}, p = new Event("scrollStart", { bubbles: !0 }), i = new Event("scrollMoving", { bubbles: !0 }), b = new Event("scrollEnd", { bubbles: !0 });
-      t.hideScrollbar === !0 && (r.style.overflow = "hidden");
-      const D = (e) => {
-        if (S)
-          return e === r;
-        for (; e && e.parentNode; ) {
-          if (e && (e != null && e.hasAttribute(L)))
+      const { onlyX: n, onlyY: i, disablechild: E } = l.modifiers, e = l.value ?? {}, p = new Event("scrollStart", { bubbles: !0 }), b = new Event("scrollMoving", { bubbles: !0 }), D = new Event("scrollEnd", { bubbles: !0 });
+      e.hideScrollbar === !0 && (r.style.overflow = "hidden");
+      const L = (t) => {
+        if (E)
+          return t === r;
+        for (; t && t.parentNode; ) {
+          if (t && (t != null && t.hasAttribute(g)))
             return !1;
-          if (e === r)
+          if (t === r)
             return !0;
-          e = e.parentNode;
+          t = t.parentNode;
         }
         return !1;
-      }, c = (e) => {
-        o = D(e.target), r.dispatchEvent(p), o && (t != null && t.startScroll) && typeof (t == null ? void 0 : t.startScroll) == "function" && t.startScroll(e);
-      }, f = (e) => {
-        r.dispatchEvent(b), o && (t != null && t.endScroll) && typeof (t == null ? void 0 : t.endScroll) == "function" && t.endScroll(e), o = !1;
-      }, u = (e) => {
-        if (!o)
-          return !1;
-        r.dispatchEvent(i), t != null && t.onScrolling && typeof (t == null ? void 0 : t.onScrolling) == "function" && t.onScrolling(e), e.stopPropagation && e.stopPropagation(), e.preventDefault && e.preventDefault(), e.cancelBubble = !0, e.returnValue = !1;
-        const l = (t == null ? void 0 : t.speed) || 1, d = t.reverseDirection ? e.movementX * l : -e.movementX * l, v = t.reverseDirection ? e.movementY * l : -e.movementY * l;
-        n ? r.scrollLeft += d : (E || (r.scrollLeft += d), r.scrollTop += v);
+      }, c = (t) => {
+        o = L(t.target), r.dispatchEvent(p), o && (e != null && e.startScroll) && typeof (e == null ? void 0 : e.startScroll) == "function" && e.startScroll(t);
+      }, f = (t) => {
+        r.dispatchEvent(D), o && (e != null && e.endScroll) && typeof (e == null ? void 0 : e.endScroll) == "function" && e.endScroll(t), o = !1;
+      }, u = (t) => {
+        var S;
+        if (!o) return !1;
+        r.dispatchEvent(b), e != null && e.onScrolling && typeof (e == null ? void 0 : e.onScrolling) == "function" && e.onScrolling(t), t.stopPropagation && t.stopPropagation(), t.preventDefault && t.preventDefault(), (S = window.getSelection()) == null || S.removeAllRanges(), t.cancelBubble = !0, t.returnValue = !1;
+        const a = (e == null ? void 0 : e.speed) || 1, d = e.reverseDirection ? t.movementX * a : -t.movementX * a, v = e.reverseDirection ? t.movementY * a : -t.movementY * a;
+        n ? r.scrollLeft += d : (i || (r.scrollLeft += d), r.scrollTop += v);
       };
       s.set(r, { dragStart: c, dragEnd: f, drag: u }), r.addEventListener("pointerdown", c), addEventListener("pointerup", f), addEventListener("pointermove", u);
     },
     unmounted(r) {
-      const { dragStart: a, dragEnd: o, drag: n } = s.get(r);
-      r.removeEventListener("pointerdown", a), removeEventListener("pointerup", o), removeEventListener("pointermove", n);
+      const { dragStart: l, dragEnd: o, drag: n } = s.get(r);
+      r.removeEventListener("pointerdown", l), removeEventListener("pointerup", o), removeEventListener("pointermove", n);
     }
   };
-})(), w = {
+})(), h = {
   install(s) {
-    s.directive("drag-scroller", h);
+    s.directive("drag-scroller", w);
   }
 };
 export {
-  w as default,
-  h as dragScroller
+  h as default,
+  w as dragScroller,
+  w as vDragScroller
 };
