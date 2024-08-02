@@ -3,6 +3,7 @@ export default {
   description: "An awesome docs template built by me",
   lang: 'en-US',
   cleanUrls: true,
+  base: "/vue-drag-scroller/",
   // If this is disabled, when building it it will give deadlink errors if your markdown has the wrong links
   ignoreDeadLinks: true,
   
@@ -20,7 +21,7 @@ export default {
         // Dropdown Menu
         text: "Changelog",
         items: [
-          { text: "v0.0.1", link: "/item-1" },
+          { text: "v1.8.2", link: "/" },
         ],
       },
     ],
