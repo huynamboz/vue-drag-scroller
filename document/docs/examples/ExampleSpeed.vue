@@ -1,5 +1,5 @@
 <script setup>
-import { dragScroller as vDragScroller } from  "vue-drag-scroller"
+import { dragScroller as vDragScroller } from  "../../../src/index"
 
 const options = {
   speed: 0.5 // default is 1
