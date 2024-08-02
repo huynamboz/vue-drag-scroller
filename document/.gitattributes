@@ -1,4 +1,0 @@
-*.js linguist-detectable=true
-*.ts linguist-detectable=true
-*.js linguist-documentation=false
-*.md linguist-detectable=true
