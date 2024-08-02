@@ -23,7 +23,7 @@ pnpm add vue-drag-scroller
 You can also include Vue Drag Scroller via CDN by adding the following script tag to your HTML file:
 
 ```html
-<script src="https://unpkg.com/vue-drag-scroller"></script>
+<script src="https://unpkg.com/vue-drag-scroller/dist/vue-drag-scroller.es.js"></script>
 ```
 
 ## Import

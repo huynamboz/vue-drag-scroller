@@ -1,4 +1,6 @@
 <script setup lang="ts">
+
+import { dragScroller as vDragScroller } from '../src';
 const onScroll = (e: Event) => {
   console.log("working" ,e);
 };
