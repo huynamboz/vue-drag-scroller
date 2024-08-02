@@ -22,4 +22,5 @@ declare const VueDragScroller: {
     install(app: App): void;
 };
 export { statefullDirective as dragScroller };
+export { statefullDirective as vDragScroller };
 export default VueDragScroller;
