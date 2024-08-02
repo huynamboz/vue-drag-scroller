@@ -16,7 +16,7 @@
   "dependencies": {
     "vitepress": "^1.0.0-rc.45",
     "vue": "^3.4.21",
-    "vue-drag-scroller": "^1.8.2"
+    "vue-drag-scroller": "^1.8.3"
   },
   "devDependencies": {
     "gh-pages": "^6.1.1"

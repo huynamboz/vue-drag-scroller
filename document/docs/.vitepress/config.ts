@@ -60,7 +60,7 @@ export default {
       next: true,
     },
     editLink: {
-      pattern: 'https://github.com/huynamboz/vue-drag-scroller/document/docs/edit/main/docs/:path',
+      pattern: 'https://github.com/huynamboz/vue-drag-scroller/edit/dev/document/docs/:path',
       text: 'Edit this page on GitHub'
     },
     footer: {
