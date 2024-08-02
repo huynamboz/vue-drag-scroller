@@ -83,12 +83,7 @@ const statefullDirective = (() => {
           OptionBinding.onScrolling(ev)
         }
 
-        // prevent text selection when mouse move
-        if (ev.stopPropagation) ev.stopPropagation()
-        if (ev.preventDefault) ev.preventDefault()
-        window.getSelection()?.removeAllRanges();
-        ev.cancelBubble = true
-        ev.returnValue = false
+        
         const speed = OptionBinding?.speed || 1
         const scrollLeftDelta = OptionBinding.reverseDirection ? ev.movementX * speed : -ev.movementX * speed;
         const scrollTopDelta = OptionBinding.reverseDirection ? ev.movementY * speed : -ev.movementY * speed;
@@ -101,16 +96,28 @@ const statefullDirective = (() => {
           elem.scrollLeft += scrollLeftDelta;
           elem.scrollTop += scrollTopDelta;
         }
+        return false
       }
 
-      state.set(elem, { dragStart, dragEnd, drag })
+      function preventSelection(ev: MouseEvent) {
+        // prevent text selection when mouse move
+        if (ev.stopPropagation) ev.stopPropagation()
+          if (ev.preventDefault) ev.preventDefault()
+          window.getSelection()?.removeAllRanges();
+          ev.cancelBubble = true
+          ev.returnValue = false
+      }
+
+      state.set(elem, { dragStart, dragEnd, drag, preventSelection })
       elem.addEventListener('pointerdown', dragStart)
+      elem.addEventListener('dragstart', preventSelection)
       addEventListener('pointerup', dragEnd)
       addEventListener('pointermove', drag)
     },
     unmounted(elem: HTMLElement) {
-      const { dragStart, dragEnd, drag } = state.get(elem)
+      const { dragStart, dragEnd, drag, preventSelection } = state.get(elem)
       elem.removeEventListener('pointerdown', dragStart)
+      elem.removeEventListener('dragstart', preventSelection)
       removeEventListener('pointerup', dragEnd)
       removeEventListener('pointermove', drag)
     }

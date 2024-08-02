@@ -126,6 +126,16 @@ const cus = () => {
           </div>
         </div>
       </div>
+
+      <div v-drag-scroller.onlyY style="width: 200px; height: 200px; overflow: auto;">
+        <img
+          src="https://picsum.photos/seed/picsum/800/800"
+          width="800"
+          class="max-w-[800px]"
+          alt=""
+        />
+      </div>
+
     </div>
   </body>
 </template>
