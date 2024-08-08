@@ -1,4 +1,4 @@
-import { App, DirectiveBinding } from 'vue';
+import type { App, DirectiveBinding } from 'vue';
 interface ICustomBinding extends DirectiveBinding {
     value: {
         startScroll?: (e: MouseEvent) => void;
