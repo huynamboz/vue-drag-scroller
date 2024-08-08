@@ -1,4 +1,4 @@
-import { App, type DirectiveBinding } from 'vue'
+import type { App, DirectiveBinding } from 'vue'
 const CHILD_DISABLE = 'drag-scroller-disable'
 const CHILD_ENABLE = 'drag-scroller-enable'
 const HIDE_SCROLLBAR = 'hideScrollbar'
@@ -97,16 +97,16 @@ const statefullDirective = (() => {
           elem.scrollTop += scrollTopDelta;
         }
 
-        if (ev.stopPropagation) ev.stopPropagation()
-        if (ev.preventDefault) ev.preventDefault()
-        ev.cancelBubble = true
-        ev.returnValue = false
-        preventSelection()
+        preventSelection(ev)
         return false
       }
 
-      function preventSelection() {
+      function preventSelection(ev: DragEvent | MouseEvent) {
         // prevent text selection when mouse move
+        // if element is image then prevent default
+        if (ev?.target instanceof HTMLImageElement) {
+          if (ev.preventDefault) ev.preventDefault()
+        }
         window.getSelection()?.removeAllRanges();
       }
 
