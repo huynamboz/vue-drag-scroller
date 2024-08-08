@@ -1,21 +1,21 @@
 {
   "name": "vue-drag-scroller",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "type": "module",
   "license": "MIT",
   "description": "A vue directive that helps you scroll in a more natural way.",
   "module": "dist/vue-drag-scroller.es.js",
   "main": "dist/vue-drag-scroller.js",
-  "types": "src/types.d.ts",
+  "types": "dist/declarations/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/vue-drag-scroller.es.js",
       "require": "./dist/vue-drag-scroller.js",
-      "types": "./src/types.d.ts"
+      "types": "./dist/declarations/index.d.ts"
     },
     "./package.json": "./package.json",
     "./dist/*": "./dist/*",
-    "./src/types.d.ts": "./src/types.d.ts"
+    "./dist/declarations/index.d.ts": "./dist/declarations/index.d.ts"
   },
   "scripts": {
     "dev": "vite --mode app",
