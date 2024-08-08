@@ -53,7 +53,7 @@
     "type": "git",
     "url": "git+https://github.com/huynamboz/vue-drag-scroller.git"
   },
-  "homepage": "https://hinam.site/docs/vue-drag-scroller",
+  "homepage": "https://huynamboz.github.io/vue-drag-scroller/",
   "keywords": [
     "vue3",
     "vue3-directive",
