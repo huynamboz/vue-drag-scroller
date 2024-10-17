@@ -5,12 +5,12 @@
   "license": "MIT",
   "description": "A vue directive that helps you scroll in a more natural way.",
   "module": "dist/vue-drag-scroller.es.js",
-  "main": "dist/vue-drag-scroller.js",
+  "main": "dist/vue-drag-scroller.cjs.js",
   "types": "dist/declarations/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/vue-drag-scroller.es.js",
-      "require": "./dist/vue-drag-scroller.js",
+      "require": "./dist/vue-drag-scroller.cjs.js",
       "types": "./dist/declarations/index.d.ts"
     },
     "./package.json": "./package.json",
