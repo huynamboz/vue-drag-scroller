@@ -19,7 +19,8 @@ export default defineConfig(({ mode }) => {
       lib: {
         entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
         name: 'vue-drag-scroller',
-        fileName: (format) => `vue-drag-scroller.${format}.js`
+        fileName: (format) => `vue-drag-scroller.${format}.js`,
+        formats: ['es', 'cjs'],
       },
     },
   }
