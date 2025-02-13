@@ -1,0 +1,1 @@
+import{_ as i,c as a,o as t,ag as n}from"./chunks/framework.Denn73Sv.js";const g=JSON.parse('{"title":"Configs","description":"","frontmatter":{},"headers":[],"relativePath":"configs.md","filePath":"configs.md"}'),l={name:"configs.md"};function h(p,s,e,k,E,d){return t(),a("div",null,s[0]||(s[0]=[n("",16)]))}const o=i(l,[["render",h]]);export{g as __pageData,o as default};
