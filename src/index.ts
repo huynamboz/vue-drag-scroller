@@ -10,6 +10,8 @@ interface ICustomBinding extends DirectiveBinding {
     speed?: number
     hideScrollbar?: boolean
     reverseDirection?: boolean
+    enableOnMobile?: boolean
+    enabled?: boolean
   }
   modifiers: {
     disablechild?: boolean
@@ -20,21 +22,40 @@ interface ICustomBinding extends DirectiveBinding {
 
 const statefullDirective = (() => {
   const state = new WeakMap()
+  // Helper to detect mobile/touch devices
+  const isTouchDevice = () => {
+    return (
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
+      // Additional check for mobile user agents
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    )
+  }
   return {
     mounted(elem: HTMLElement, binding: ICustomBinding) {
       let isDrag = false
       const { onlyX, onlyY, disablechild } = binding.modifiers
-      
-      
+
       const OptionBinding = binding.value ?? {}
-      
+
+      // Skip initialization on mobile/touch devices unless explicitly enabled
+      if (isTouchDevice() && !OptionBinding.enableOnMobile) {
+        // Let native touch scrolling handle it
+        return
+      }
+
       // custom event
       const eventStart = new Event('scrollStart', { bubbles: true })
       const eventMoving = new Event('scrollMoving', { bubbles: true })
       const eventEnd = new Event('scrollEnd', { bubbles: true })
-      
+      // Store reactive options reference
+      const options = {
+        binding: binding.value ?? {}
+      }
+
       // hide scrollbar
-      if (OptionBinding.hideScrollbar === true) {
+      if (options.binding.hideScrollbar === true) {
         elem.style.overflow = 'hidden'
       }
 
@@ -57,44 +78,50 @@ const statefullDirective = (() => {
 
       const dragStart = (e: MouseEvent): void => {
         isDrag = checkTag(e.target as HTMLElement)
-          elem.dispatchEvent(eventStart)
-          if (
+        elem.dispatchEvent(eventStart)
+        if (
           isDrag &&
-          OptionBinding?.startScroll &&
-          typeof OptionBinding?.startScroll === 'function'
+          options.binding?.startScroll &&
+          typeof options.binding?.startScroll === 'function'
         ) {
-          OptionBinding.startScroll(e)
+          options.binding.startScroll(e)
         }
       }
 
-      const dragEnd = (e: MouseEvent): void => {
-          elem.dispatchEvent(eventEnd)
-          if (isDrag && OptionBinding?.endScroll && typeof OptionBinding?.endScroll === 'function') {
-          OptionBinding.endScroll(e)
+      const dragEnd = (e?: MouseEvent): void => {
+        if (!isDrag) return
+        elem.dispatchEvent(eventEnd)
+        if (options.binding?.endScroll && typeof options.binding?.endScroll === 'function') {
+          options.binding.endScroll(e!)
         }
         isDrag = false
       }
 
       const drag = (ev: MouseEvent): any => {
-        if (!isDrag) return false
+        // Check if drag scrolling is enabled (default to true if not specified)
+        const isEnabled = options.binding.enabled !== false
+        if (!isDrag || !isEnabled) return false
 
-          elem.dispatchEvent(eventMoving)
-          if (OptionBinding?.onScrolling && typeof OptionBinding?.onScrolling === 'function') {
-          OptionBinding.onScrolling(ev)
+        elem.dispatchEvent(eventMoving)
+        if (options.binding?.onScrolling && typeof options.binding?.onScrolling === 'function') {
+          options.binding.onScrolling(ev)
         }
 
-        
-        const speed = OptionBinding?.speed || 1
-        const scrollLeftDelta = OptionBinding.reverseDirection ? ev.movementX * speed : -ev.movementX * speed;
-        const scrollTopDelta = OptionBinding.reverseDirection ? ev.movementY * speed : -ev.movementY * speed;
+        const speed = options.binding?.speed || 1
+        const scrollLeftDelta = options.binding.reverseDirection
+          ? ev.movementX * speed
+          : -ev.movementX * speed
+        const scrollTopDelta = options.binding.reverseDirection
+          ? ev.movementY * speed
+          : -ev.movementY * speed
 
         if (onlyX) {
-          elem.scrollLeft += scrollLeftDelta;
+          elem.scrollLeft += scrollLeftDelta
         } else if (onlyY) {
-          elem.scrollTop += scrollTopDelta;
+          elem.scrollTop += scrollTopDelta
         } else {
-          elem.scrollLeft += scrollLeftDelta;
-          elem.scrollTop += scrollTopDelta;
+          elem.scrollLeft += scrollLeftDelta
+          elem.scrollTop += scrollTopDelta
         }
 
         preventSelection(ev)
@@ -107,31 +134,83 @@ const statefullDirective = (() => {
         if (ev?.target instanceof HTMLImageElement) {
           if (ev.preventDefault) ev.preventDefault()
         }
-        window.getSelection()?.removeAllRanges();
+        window.getSelection()?.removeAllRanges()
       }
 
-      state.set(elem, { dragStart, dragEnd, drag, preventSelection })
-      elem.addEventListener('pointerdown', dragStart)
+      // Additional safety to reset drag state
+      const resetDrag = () => {
+        isDrag = false
+      }
+
+      state.set(elem, { dragStart, dragEnd, drag, preventSelection, resetDrag, options })
+      elem.addEventListener('mousedown', dragStart)
       elem.addEventListener('dragstart', preventSelection)
-      addEventListener('pointerup', dragEnd)
-      addEventListener('pointermove', drag)
+      elem.addEventListener('mouseleave', dragEnd)
+      window.addEventListener('mouseup', dragEnd)
+      window.addEventListener('pointerup', dragEnd)
+      window.addEventListener('mousemove', drag)
+      window.addEventListener('blur', resetDrag)
+      // Reset drag state when a native drag starts (for compatibility with draggable libraries)
+      elem.addEventListener('dragstart', resetDrag)
+    },
+    updated(elem: HTMLElement, binding: ICustomBinding) {
+      const handlers = state.get(elem)
+      if (!handlers) return
+
+      // Update the options reference so event handlers use new values
+      handlers.options.binding = binding.value ?? {}
+
+      // Update hideScrollbar style
+      if (handlers.options.binding.hideScrollbar === true) {
+        elem.style.overflow = 'hidden'
+      } else if (handlers.options.binding.hideScrollbar === false) {
+        elem.style.overflow = ''
+      }
     },
     unmounted(elem: HTMLElement) {
-      const { dragStart, dragEnd, drag, preventSelection } = state.get(elem)
-      elem.removeEventListener('pointerdown', dragStart)
+      const handlers = state.get(elem)
+      if (!handlers) return
+
+      const { dragStart, dragEnd, drag, preventSelection, resetDrag } = handlers
+      elem.removeEventListener('mousedown', dragStart)
       elem.removeEventListener('dragstart', preventSelection)
-      removeEventListener('pointerup', dragEnd)
-      removeEventListener('pointermove', drag)
+      elem.removeEventListener('mouseleave', dragEnd)
+      elem.removeEventListener('dragstart', resetDrag)
+      window.removeEventListener('mouseup', dragEnd)
+      window.removeEventListener('mousemove', drag)
+      window.removeEventListener('blur', resetDrag)
+      state.delete(elem)
     }
   }
 })()
 
+// Export types
+export type DragScrollerOptions = ICustomBinding['value']
+export type DragScrollerModifiers = ICustomBinding['modifiers']
+
 // export directive as plugin vue
-const VueDragScroller = {
+const VueDragScrollerPlugin = {
   install(app: App) {
     app.directive('drag-scroller', statefullDirective)
   }
 }
+
+// Module export - can be used without installing the plugin
+export const VueDragScrollerModule = {
+  directive: statefullDirective,
+  install(app: App) {
+    app.directive('drag-scroller', statefullDirective)
+  }
+}
+
 export { statefullDirective as dragScroller }
 export { statefullDirective as vDragScroller }
-export default VueDragScroller
+export { VueDragScrollerPlugin }
+export default VueDragScrollerPlugin
+
+// Augment Vue types for directive autocomplete
+declare module 'vue' {
+  export interface ComponentCustomProperties {
+    vDragScroller: DragScrollerOptions
+  }
+}

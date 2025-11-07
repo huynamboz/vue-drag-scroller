@@ -1,7 +1,10 @@
-declare module 'vue-drag-scroller' {
-  import VueDragScroller from './index.ts'
-  import { dragScroller } from './index.ts'
+import type { DragScrollerOptions, DragScrollerModifiers } from './index'
 
-  export { dragScroller }
-  export default VueDragScroller
+declare module 'vue-drag-scroller' {
+  import VueDragScrollerPlugin from './index.ts'
+  import { dragScroller, vDragScroller, VueDragScrollerModule } from './index.ts'
+
+  export { dragScroller, vDragScroller, VueDragScrollerModule }
+  export type { DragScrollerOptions, DragScrollerModifiers }
+  export default VueDragScrollerPlugin
 }

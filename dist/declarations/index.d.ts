@@ -7,6 +7,8 @@ interface ICustomBinding extends DirectiveBinding {
         speed?: number;
         hideScrollbar?: boolean;
         reverseDirection?: boolean;
+        enableOnMobile?: boolean;
+        enabled?: boolean;
     };
     modifiers: {
         disablechild?: boolean;
@@ -16,11 +18,28 @@ interface ICustomBinding extends DirectiveBinding {
 }
 declare const statefullDirective: {
     mounted(elem: HTMLElement, binding: ICustomBinding): void;
+    updated(elem: HTMLElement, binding: ICustomBinding): void;
     unmounted(elem: HTMLElement): void;
 };
-declare const VueDragScroller: {
+export type DragScrollerOptions = ICustomBinding['value'];
+export type DragScrollerModifiers = ICustomBinding['modifiers'];
+declare const VueDragScrollerPlugin: {
+    install(app: App): void;
+};
+export declare const VueDragScrollerModule: {
+    directive: {
+        mounted(elem: HTMLElement, binding: ICustomBinding): void;
+        updated(elem: HTMLElement, binding: ICustomBinding): void;
+        unmounted(elem: HTMLElement): void;
+    };
     install(app: App): void;
 };
 export { statefullDirective as dragScroller };
 export { statefullDirective as vDragScroller };
-export default VueDragScroller;
+export { VueDragScrollerPlugin };
+export default VueDragScrollerPlugin;
+declare module 'vue' {
+    interface ComponentCustomProperties {
+        vDragScroller: DragScrollerOptions;
+    }
+}
