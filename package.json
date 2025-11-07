@@ -37,7 +37,8 @@
     "type-check": "vue-tsc --noEmit --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "define": "vue-tsc --declaration --emitDeclarationOnly --outDir dist/declarations"
+    "define": "vue-tsc --declaration --emitDeclarationOnly --outDir dist/declarations",
+    "prepare": "npm run build-lib"
   },
   "dependencies": {
     "vue": "^3.3.11"
