@@ -4,9 +4,9 @@ const CHILD_ENABLE = 'drag-scroller-enable'
 const HIDE_SCROLLBAR = 'hideScrollbar'
 interface ICustomBinding extends DirectiveBinding {
   value: {
-    startScroll?: (e: MouseEvent) => void
-    endScroll?: (e: MouseEvent) => void
-    onScrolling?: (e: MouseEvent) => void
+    startScroll?: (e: PointerEvent) => void
+    endScroll?: (e?: PointerEvent) => void
+    onScrolling?: (e: PointerEvent) => void
     speed?: number
     hideScrollbar?: boolean
     reverseDirection?: boolean
@@ -22,18 +22,16 @@ interface ICustomBinding extends DirectiveBinding {
 
 const statefullDirective = (() => {
   const state = new WeakMap()
-  // Helper to detect mobile/touch devices
-  const isTouchDevice = () => {
-    return (
-      'ontouchstart' in window ||
-      navigator.maxTouchPoints > 0 ||
-      (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
-      // Additional check for mobile user agents
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-    )
-  }
   return {
     mounted(elem: HTMLElement, binding: ICustomBinding) {
+      // SSR-safe mobile/touch detection — only runs in mounted (client-side)
+      const isTouchDevice = () => {
+        return (
+          navigator.maxTouchPoints > 0 ||
+          (window.matchMedia && window.matchMedia('(pointer: coarse)').matches)
+        )
+      }
+
       let isDrag = false
       const { onlyX, onlyY, disablechild } = binding.modifiers
 
@@ -41,7 +39,6 @@ const statefullDirective = (() => {
 
       // Skip initialization on mobile/touch devices unless explicitly enabled
       if (isTouchDevice() && !OptionBinding.enableOnMobile) {
-        // Let native touch scrolling handle it
         return
       }
 
@@ -76,7 +73,7 @@ const statefullDirective = (() => {
         return false
       }
 
-      const dragStart = (e: MouseEvent): void => {
+      const dragStart = (e: PointerEvent): void => {
         isDrag = checkTag(e.target as HTMLElement)
         elem.dispatchEvent(eventStart)
         if (
@@ -88,16 +85,16 @@ const statefullDirective = (() => {
         }
       }
 
-      const dragEnd = (e?: MouseEvent): void => {
+      const dragEnd = (e?: PointerEvent): void => {
         if (!isDrag) return
         elem.dispatchEvent(eventEnd)
         if (options.binding?.endScroll && typeof options.binding?.endScroll === 'function') {
-          options.binding.endScroll(e!)
+          options.binding.endScroll(e)
         }
         isDrag = false
       }
 
-      const drag = (ev: MouseEvent): any => {
+      const drag = (ev: PointerEvent): any => {
         // Check if drag scrolling is enabled (default to true if not specified)
         const isEnabled = options.binding.enabled !== false
         if (!isDrag || !isEnabled) return false
@@ -128,7 +125,7 @@ const statefullDirective = (() => {
         return false
       }
 
-      function preventSelection(ev: DragEvent | MouseEvent) {
+      function preventSelection(ev: DragEvent | PointerEvent) {
         // prevent text selection when mouse move
         // if element is image then prevent default
         if (ev?.target instanceof HTMLImageElement) {
@@ -143,15 +140,12 @@ const statefullDirective = (() => {
       }
 
       state.set(elem, { dragStart, dragEnd, drag, preventSelection, resetDrag, options })
-      elem.addEventListener('mousedown', dragStart)
+      elem.addEventListener('pointerdown', dragStart)
       elem.addEventListener('dragstart', preventSelection)
-      elem.addEventListener('mouseleave', dragEnd)
-      window.addEventListener('mouseup', dragEnd)
-      window.addEventListener('pointerup', dragEnd)
-      window.addEventListener('mousemove', drag)
-      window.addEventListener('blur', resetDrag)
-      // Reset drag state when a native drag starts (for compatibility with draggable libraries)
       elem.addEventListener('dragstart', resetDrag)
+      window.addEventListener('pointerup', dragEnd)
+      window.addEventListener('pointermove', drag)
+      window.addEventListener('blur', resetDrag)
     },
     updated(elem: HTMLElement, binding: ICustomBinding) {
       const handlers = state.get(elem)
@@ -172,12 +166,11 @@ const statefullDirective = (() => {
       if (!handlers) return
 
       const { dragStart, dragEnd, drag, preventSelection, resetDrag } = handlers
-      elem.removeEventListener('mousedown', dragStart)
+      elem.removeEventListener('pointerdown', dragStart)
       elem.removeEventListener('dragstart', preventSelection)
-      elem.removeEventListener('mouseleave', dragEnd)
       elem.removeEventListener('dragstart', resetDrag)
-      window.removeEventListener('mouseup', dragEnd)
-      window.removeEventListener('mousemove', drag)
+      window.removeEventListener('pointerup', dragEnd)
+      window.removeEventListener('pointermove', drag)
       window.removeEventListener('blur', resetDrag)
       state.delete(elem)
     }
@@ -195,17 +188,11 @@ const VueDragScrollerPlugin = {
   }
 }
 
-// Module export - can be used without installing the plugin
-export const VueDragScrollerModule = {
-  directive: statefullDirective,
-  install(app: App) {
-    app.directive('drag-scroller', statefullDirective)
-  }
-}
-
 export { statefullDirective as dragScroller }
 export { statefullDirective as vDragScroller }
 export { VueDragScrollerPlugin }
+// Backward compatible alias
+export const VueDragScroller = VueDragScrollerPlugin
 export default VueDragScrollerPlugin
 
 // Augment Vue types for directive autocomplete

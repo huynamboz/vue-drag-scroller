@@ -37,8 +37,7 @@
     "type-check": "vue-tsc --noEmit --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "define": "vue-tsc --declaration --emitDeclarationOnly --outDir dist/declarations",
-    "prepare": "npm run build-lib"
+    "define": "vue-tsc --declaration --emitDeclarationOnly --outDir dist/declarations"
   },
   "dependencies": {
     "vue": "^3.3.11"
@@ -57,7 +56,6 @@
     "eslint-plugin-vue": "^9.17.0",
     "gh-pages": "^6.1.1",
     "npm-run-all2": "^6.1.1",
-    "nuxt": "^4.2.1",
     "prettier": "^3.0.3",
     "typescript": "~5.3.0",
     "vite": "^5.0.10",

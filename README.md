@@ -251,9 +251,7 @@ const options = {
 #### Example
 ```javascript
 <template>
-    <div v-drag-scroller={
-      hideScrollbar: true
-    }>
+    <div v-drag-scroller="{ hideScrollbar: true }">
     </div>
 </template>
 ```
@@ -261,9 +259,7 @@ const options = {
 #### Example
 ```javascript
 <template>
-    <div v-drag-scroller={
-      speed: 0.5 // default is 1
-    }>
+    <div v-drag-scroller="{ speed: 0.5 }">
     </div>
 </template>
 ```
@@ -271,9 +267,7 @@ const options = {
 #### Example
 ```javascript
 <template>
-    <div v-drag-scroller={
-      reverseDirection: true
-    }>
+    <div v-drag-scroller="{ reverseDirection: true }">
     </div>
 </template>
 ```
@@ -282,9 +276,7 @@ By default, drag scroll is disabled on mobile/touch devices to allow native touc
 #### Example
 ```javascript
 <template>
-    <div v-drag-scroller={
-      enableOnMobile: true
-    }>
+    <div v-drag-scroller="{ enableOnMobile: true }">
     </div>
 </template>
 ```
@@ -298,9 +290,7 @@ const isDragEnabled = ref(true)
 </script>
 
 <template>
-    <div v-drag-scroller={
-      enabled: isDragEnabled
-    }>
+    <div v-drag-scroller="{ enabled: isDragEnabled }">
     </div>
     <button @click="isDragEnabled = !isDragEnabled">
       Toggle Drag Scroll

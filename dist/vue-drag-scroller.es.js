@@ -1,75 +1,70 @@
-const P = "drag-scroller-disable", b = /* @__PURE__ */ (() => {
-  const s = /* @__PURE__ */ new WeakMap(), m = () => "ontouchstart" in window || navigator.maxTouchPoints > 0 || window.matchMedia && window.matchMedia("(pointer: coarse)").matches || // Additional check for mobile user agents
-  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const A = "drag-scroller-disable", I = /* @__PURE__ */ (() => {
+  const d = /* @__PURE__ */ new WeakMap();
   return {
-    mounted(n, a) {
-      let r = !1;
-      const { onlyX: d, onlyY: u, disablechild: g } = a.modifiers, l = a.value ?? {};
-      if (m() && !l.enableOnMobile)
+    mounted(t, o) {
+      const s = () => navigator.maxTouchPoints > 0 || window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+      let a = !1;
+      const { onlyX: c, onlyY: g, disablechild: l } = o.modifiers, D = o.value ?? {};
+      if (s() && !D.enableOnMobile)
         return;
-      const M = new Event("scrollStart", { bubbles: !0 }), y = new Event("scrollMoving", { bubbles: !0 }), T = new Event("scrollEnd", { bubbles: !0 }), t = {
-        binding: a.value ?? {}
+      const y = new Event("scrollStart", { bubbles: !0 }), m = new Event("scrollMoving", { bubbles: !0 }), M = new Event("scrollEnd", { bubbles: !0 }), e = {
+        binding: o.value ?? {}
       };
-      t.binding.hideScrollbar === !0 && (n.style.overflow = "hidden");
-      const A = (e) => {
-        if (g)
-          return e === n;
-        for (; e && e.parentNode; ) {
-          if (e && (e != null && e.hasAttribute(P)))
+      e.binding.hideScrollbar === !0 && (t.style.overflow = "hidden");
+      const T = (n) => {
+        if (l)
+          return n === t;
+        for (; n && n.parentNode; ) {
+          if (n && (n != null && n.hasAttribute(A)))
             return !1;
-          if (e === n)
+          if (n === t)
             return !0;
-          e = e.parentNode;
+          n = n.parentNode;
         }
         return !1;
-      }, w = (e) => {
-        var i, o;
-        r = A(e.target), n.dispatchEvent(M), r && ((i = t.binding) != null && i.startScroll) && typeof ((o = t.binding) == null ? void 0 : o.startScroll) == "function" && t.binding.startScroll(e);
-      }, c = (e) => {
-        var i, o;
-        r && (n.dispatchEvent(T), (i = t.binding) != null && i.endScroll && typeof ((o = t.binding) == null ? void 0 : o.endScroll) == "function" && t.binding.endScroll(e), r = !1);
-      }, p = (e) => {
-        var h, L, D;
-        const i = t.binding.enabled !== !1;
-        if (!r || !i) return !1;
-        n.dispatchEvent(y), (h = t.binding) != null && h.onScrolling && typeof ((L = t.binding) == null ? void 0 : L.onScrolling) == "function" && t.binding.onScrolling(e);
-        const o = ((D = t.binding) == null ? void 0 : D.speed) || 1, E = t.binding.reverseDirection ? e.movementX * o : -e.movementX * o, S = t.binding.reverseDirection ? e.movementY * o : -e.movementY * o;
-        return d ? n.scrollLeft += E : (u || (n.scrollLeft += E), n.scrollTop += S), v(e), !1;
+      }, v = (n) => {
+        var r, i;
+        a = T(n.target), t.dispatchEvent(y), a && ((r = e.binding) != null && r.startScroll) && typeof ((i = e.binding) == null ? void 0 : i.startScroll) == "function" && e.binding.startScroll(n);
+      }, b = (n) => {
+        var r, i;
+        a && (t.dispatchEvent(M), (r = e.binding) != null && r.endScroll && typeof ((i = e.binding) == null ? void 0 : i.endScroll) == "function" && e.binding.endScroll(n), a = !1);
+      }, p = (n) => {
+        var S, h, L;
+        const r = e.binding.enabled !== !1;
+        if (!a || !r) return !1;
+        t.dispatchEvent(m), (S = e.binding) != null && S.onScrolling && typeof ((h = e.binding) == null ? void 0 : h.onScrolling) == "function" && e.binding.onScrolling(n);
+        const i = ((L = e.binding) == null ? void 0 : L.speed) || 1, w = e.binding.reverseDirection ? n.movementX * i : -n.movementX * i, E = e.binding.reverseDirection ? n.movementY * i : -n.movementY * i;
+        return c ? t.scrollLeft += w : (g || (t.scrollLeft += w), t.scrollTop += E), f(n), !1;
       };
-      function v(e) {
-        var i;
-        (e == null ? void 0 : e.target) instanceof HTMLImageElement && e.preventDefault && e.preventDefault(), (i = window.getSelection()) == null || i.removeAllRanges();
+      function f(n) {
+        var r;
+        (n == null ? void 0 : n.target) instanceof HTMLImageElement && n.preventDefault && n.preventDefault(), (r = window.getSelection()) == null || r.removeAllRanges();
       }
-      const f = () => {
-        r = !1;
+      const u = () => {
+        a = !1;
       };
-      s.set(n, { dragStart: w, dragEnd: c, drag: p, preventSelection: v, resetDrag: f, options: t }), n.addEventListener("mousedown", w), n.addEventListener("dragstart", v), n.addEventListener("mouseleave", c), window.addEventListener("mouseup", c), window.addEventListener("pointerup", c), window.addEventListener("mousemove", p), window.addEventListener("blur", f), n.addEventListener("dragstart", f);
+      d.set(t, { dragStart: v, dragEnd: b, drag: p, preventSelection: f, resetDrag: u, options: e }), t.addEventListener("pointerdown", v), t.addEventListener("dragstart", f), t.addEventListener("dragstart", u), window.addEventListener("pointerup", b), window.addEventListener("pointermove", p), window.addEventListener("blur", u);
     },
-    updated(n, a) {
-      const r = s.get(n);
-      r && (r.options.binding = a.value ?? {}, r.options.binding.hideScrollbar === !0 ? n.style.overflow = "hidden" : r.options.binding.hideScrollbar === !1 && (n.style.overflow = ""));
+    updated(t, o) {
+      const s = d.get(t);
+      s && (s.options.binding = o.value ?? {}, s.options.binding.hideScrollbar === !0 ? t.style.overflow = "hidden" : s.options.binding.hideScrollbar === !1 && (t.style.overflow = ""));
     },
-    unmounted(n) {
-      const a = s.get(n);
-      if (!a) return;
-      const { dragStart: r, dragEnd: d, drag: u, preventSelection: g, resetDrag: l } = a;
-      n.removeEventListener("mousedown", r), n.removeEventListener("dragstart", g), n.removeEventListener("mouseleave", d), n.removeEventListener("dragstart", l), window.removeEventListener("mouseup", d), window.removeEventListener("mousemove", u), window.removeEventListener("blur", l), s.delete(n);
+    unmounted(t) {
+      const o = d.get(t);
+      if (!o) return;
+      const { dragStart: s, dragEnd: a, drag: c, preventSelection: g, resetDrag: l } = o;
+      t.removeEventListener("pointerdown", s), t.removeEventListener("dragstart", g), t.removeEventListener("dragstart", l), window.removeEventListener("pointerup", a), window.removeEventListener("pointermove", c), window.removeEventListener("blur", l), d.delete(t);
     }
   };
-})(), B = {
-  install(s) {
-    s.directive("drag-scroller", b);
+})(), X = {
+  install(d) {
+    d.directive("drag-scroller", I);
   }
-}, I = {
-  directive: b,
-  install(s) {
-    s.directive("drag-scroller", b);
-  }
-};
+}, Y = X;
 export {
-  I as VueDragScrollerModule,
-  B as VueDragScrollerPlugin,
-  B as default,
-  b as dragScroller,
-  b as vDragScroller
+  Y as VueDragScroller,
+  X as VueDragScrollerPlugin,
+  X as default,
+  I as dragScroller,
+  I as vDragScroller
 };
