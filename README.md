@@ -65,9 +65,10 @@ app.mount('#app')
     </div>
 </template>
 ```
-**Register in Nuxt:**
+**Register in Nuxt (v1.9.0+):**
 
-**Option 1: Using Nuxt Module (Recommended)**
+Since version **1.9.0**, `vue-drag-scroller` ships with a built-in Nuxt module. Just add it to your `nuxt.config.ts` — no plugin file needed:
+
 ```javascript
 // nuxt.config.ts
 export default defineNuxtConfig({
@@ -75,7 +76,44 @@ export default defineNuxtConfig({
 })
 ```
 
-**Option 2: Using Plugin**
+The `v-drag-scroller` directive is auto-registered globally. All options, modifiers, and events work the same as in Vue 3:
+
+```html
+<template>
+    <!-- basic -->
+    <div v-drag-scroller>...</div>
+
+    <!-- with modifiers -->
+    <div v-drag-scroller.onlyX>...</div>
+    <div v-drag-scroller.onlyY>...</div>
+    <div v-drag-scroller.disablechild>...</div>
+
+    <!-- with options -->
+    <div v-drag-scroller="{
+        speed: 1,
+        hideScrollbar: true,
+        reverseDirection: false,
+        enableOnMobile: false,
+        enabled: true,
+        startScroll: () => console.log('start'),
+        endScroll: () => console.log('end'),
+        onScrolling: () => console.log('scrolling'),
+    }">...</div>
+
+    <!-- event listeners -->
+    <div v-drag-scroller
+        @scrollStart="onScroll"
+        @scrollEnd="onEndScroll"
+        @scrollMoving="onScrolling"
+    >...</div>
+</template>
+```
+
+> **Note:** The Nuxt module is SSR-safe. Drag scroll listeners are only attached on the client side.
+
+<details>
+<summary><strong>Legacy: Using Plugin (before v1.9.0)</strong></summary>
+
 ```javascript
 // plugins/vue-drag-scroller.js
 import VueDragScroller from 'vue-drag-scroller'
@@ -90,6 +128,7 @@ export default defineNuxtConfig({
   plugins: ['~/plugins/vue-drag-scroller.ts'],
 })
 ```
+</details>
 
 
 ## Config🔖
