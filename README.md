@@ -389,6 +389,10 @@ A Nuxt 3 app is included in `playground/` for testing the `vue-drag-scroller/nux
 
 Thanks to everyone who has contributed!
 
-<a href="https://github.com/huynamboz/vue-drag-scroller/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=huynamboz/vue-drag-scroller" />
-</a>
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/huynamboz"><img src="https://avatars.githubusercontent.com/u/38585889?v=4" width="80" /><br /><sub><b>huynamboz</b></sub></a></td>
+    <td align="center"><a href="https://github.com/syblock"><img src="https://avatars.githubusercontent.com/u/12569918?v=4" width="80" /><br /><sub><b>syblock</b></sub></a></td>
+    <td align="center"><a href="https://github.com/huynam-dana"><img src="https://avatars.githubusercontent.com/u/205717169?v=4" width="80" /><br /><sub><b>huynam-dana</b></sub></a></td>
+  </tr>
+</table>
