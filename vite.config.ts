@@ -22,6 +22,25 @@ export default defineConfig(({ mode }) => {
         fileName: (format) => `vue-drag-scroller.${format}.js`,
         formats: ['es', 'cjs'],
       },
+      rollupOptions: {
+        external: ['vue'],
+      }
+    },
+  }
+ } else if (mode === 'nuxt') {
+  return {
+    ...baseConfig,
+    build: {
+      emptyOutDir: false, // Don't clear dist folder
+      lib: {
+        entry: fileURLToPath(new URL('./src/nuxt.ts', import.meta.url)),
+        name: 'nuxt-module',
+        fileName: (format) => `nuxt.${format === 'es' ? 'mjs' : 'cjs'}`,
+        formats: ['es', 'cjs'],
+      },
+      rollupOptions: {
+        external: ['vue', '@nuxt/kit', '@nuxt/schema', 'nuxt/app', '#app'],
+      }
     },
   }
  } else if (mode === 'app') {
