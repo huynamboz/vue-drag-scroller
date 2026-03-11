@@ -297,3 +297,51 @@ const isDragEnabled = ref(true)
     </button>
 </template>
 ```
+
+## Contributing
+
+Contributions are welcome! Here's how to get started:
+
+### Prerequisites
+- Node.js >= 18
+- npm or yarn
+
+### Setup
+```bash
+# Clone the repo
+git clone https://github.com/huynamboz/vue-drag-scroller.git
+cd vue-drag-scroller
+
+# Install dependencies
+npm install
+
+# Build the library (required before running playground)
+npm run build-lib
+```
+
+### Development
+```bash
+# Run the Vite example app
+npm run dev
+
+# Or use the Nuxt playground to test the Nuxt module
+cd playground
+npm install
+npm run dev
+```
+
+### Nuxt Playground
+A Nuxt 3 app is included in `playground/` for testing the `vue-drag-scroller/nuxt` module locally. It covers:
+- Basic drag scroll
+- `onlyX` / `onlyY` modifiers
+- Dynamic `enabled` toggle
+- `hideScrollbar` option
+- Callback logging (`startScroll`, `endScroll`, `onScrolling`)
+
+> **Note:** Run `npm run build-lib` at the root first so the `dist/` output is available.
+
+### Submitting Changes
+1. Fork the repo and create a branch from `dev`
+2. Make your changes
+3. Test with both the Vite example (`npm run dev`) and the Nuxt playground
+4. Submit a pull request to the `dev` branch

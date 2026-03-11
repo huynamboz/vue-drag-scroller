@@ -28,3 +28,8 @@ coverage
 
 *.tsbuildinfo
 .vscode
+
+# Playground
+playground/node_modules
+playground/.nuxt
+playground/.output
