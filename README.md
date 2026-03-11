@@ -384,3 +384,11 @@ A Nuxt 3 app is included in `playground/` for testing the `vue-drag-scroller/nux
 2. Make your changes
 3. Test with both the Vite example (`npm run dev`) and the Nuxt playground
 4. Submit a pull request to the `dev` branch
+
+## Contributors
+
+Thanks to everyone who has contributed!
+
+<a href="https://github.com/huynamboz/vue-drag-scroller/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=huynamboz/vue-drag-scroller" />
+</a>
