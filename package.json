@@ -7,6 +7,11 @@
   "module": "dist/vue-drag-scroller.es.js",
   "main": "dist/vue-drag-scroller.cjs.js",
   "types": "dist/declarations/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
     ".": {
       "import": "./dist/vue-drag-scroller.es.js",
