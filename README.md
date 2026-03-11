@@ -66,6 +66,16 @@ app.mount('#app')
 </template>
 ```
 **Register in Nuxt:**
+
+**Option 1: Using Nuxt Module (Recommended)**
+```javascript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['vue-drag-scroller/nuxt']
+})
+```
+
+**Option 2: Using Plugin**
 ```javascript
 // plugins/vue-drag-scroller.js
 import VueDragScroller from 'vue-drag-scroller'
@@ -95,9 +105,14 @@ const options = ref({
     endScroll: () => {
         console.log("end scroll");
     },
+    onScrolling: () => {
+        console.log("scrolling");
+    },
     speed: 1, // default is 1
     reverseDirection: false, // default is false
     hideScrollbar: false, // default is false
+    enableOnMobile: false, // default is false - enable drag scroll on mobile devices
+    enabled: true, // default is true - enable/disable drag scroll dynamically
 });
 </script>
 
@@ -110,9 +125,12 @@ const options = ref({
 |--|--|--|--|
 | startScroll | Trigger when start scroll | Function | null |
 | endScroll | Trigger when end scroll | Function | null |
+| onScrolling | Trigger when scrolling/dragging | Function | null |
 | speed | Speed of scroll | Number | 1 |
 | hideScrollbar | Hide scrollbar | Boolean | false |
 | reverseDirection | Reverse direction of scroll | Boolean | false |
+| enableOnMobile | Enable drag scroll on mobile/touch devices | Boolean | false |
+| enabled | Enable/disable drag scroll dynamically | Boolean | true |
 ### Binding value:
 you can pass binding value to directive like this:
 ```javascript
@@ -233,9 +251,7 @@ const options = {
 #### Example
 ```javascript
 <template>
-    <div v-drag-scroller={
-      hideScrollbar: true
-    }>
+    <div v-drag-scroller="{ hideScrollbar: true }">
     </div>
 </template>
 ```
@@ -243,9 +259,7 @@ const options = {
 #### Example
 ```javascript
 <template>
-    <div v-drag-scroller={
-      speed: 0.5 // default is 1
-    }>
+    <div v-drag-scroller="{ speed: 0.5 }">
     </div>
 </template>
 ```
@@ -253,9 +267,33 @@ const options = {
 #### Example
 ```javascript
 <template>
-    <div v-drag-scroller={
-      reverseDirection: true
-    }>
+    <div v-drag-scroller="{ reverseDirection: true }">
     </div>
+</template>
+```
+- ### Enable on mobile/touch devices
+By default, drag scroll is disabled on mobile/touch devices to allow native touch scrolling. You can enable it:
+#### Example
+```javascript
+<template>
+    <div v-drag-scroller="{ enableOnMobile: true }">
+    </div>
+</template>
+```
+- ### Enable/disable drag scroll dynamically
+You can enable or disable drag scroll dynamically:
+#### Example
+```javascript
+<script setup>
+import { ref } from 'vue'
+const isDragEnabled = ref(true)
+</script>
+
+<template>
+    <div v-drag-scroller="{ enabled: isDragEnabled }">
+    </div>
+    <button @click="isDragEnabled = !isDragEnabled">
+      Toggle Drag Scroll
+    </button>
 </template>
 ```
