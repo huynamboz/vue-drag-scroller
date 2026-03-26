@@ -7,7 +7,7 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'vue-drag-scroller',
     configKey: 'vueDragScroller',
     compatibility: {
-      nuxt: '^3.0.0'
+      nuxt: '>=3.0.0'
     }
   },
   defaults: {},
